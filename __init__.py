@@ -1,2 +1,2 @@
-from .interact import Bot
-from .spam import SpamBot
+from interact import Bot
+from spam import SpamBot
