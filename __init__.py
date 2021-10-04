@@ -1,2 +1,2 @@
-from bot.spam import *
-from bot.interact import *
+from bot.interact import Bot
+from bot.spam import SpamBot
