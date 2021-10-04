@@ -1,6 +1,6 @@
 from distutils.core import setup
 setup(name="pygram",
-      version="0.1",
+      version="0.2",
       description="Interact with content and users of Instagram",
       author="Ismaele Lorenzon",
       author_email="lorenzonismaele@gmail.com",
