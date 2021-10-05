@@ -26,7 +26,7 @@ class SpamBot:
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
         blockPrint()
-        cookies, result = self.__login(username, password)
+        cookies, result = self._login(username, password)
         enablePrint()
         if result:
             self.cookies = cookies
@@ -100,7 +100,7 @@ class SpamBot:
             password = input("Password: ")
             self.login(username, password)
         blockPrint()
-        result = self.__send(user, message)
+        result = self._send(user, message)
         enablePrint()
         if result:
             print("DM sended correctly.")
@@ -210,7 +210,7 @@ class Bot:
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
         blockPrint()
-        cookies, result = self.__login(username, password)
+        cookies, result = self._login(username, password)
         enablePrint()
         if result:
             self.cookies = cookies
@@ -283,7 +283,7 @@ class Bot:
             password = input("Password: ")
             self.login(username, password)
         blockPrint()
-        result = self.__like(link)
+        result = self._like(link)
         enablePrint()
         if result:
             print("Post liked correctly.")
@@ -333,7 +333,7 @@ class Bot:
             password = input("Password: ")
             self.login(username, password)
         blockPrint()
-        result = self.__follow("https://www.instagram.com/"+username)
+        result = self._follow("https://www.instagram.com/"+username)
         enablePrint()
         if result:
             print("User followed correctly.")
