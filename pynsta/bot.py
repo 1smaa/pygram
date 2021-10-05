@@ -36,6 +36,8 @@ class SpamBot:
             return None, False
         btns = browser.find_elements_by_tag_name("button")
         for btn in btns:
+            if self.headless:
+                break
             if "Accept All" in btn.text:
                 btn.click()
                 break
@@ -90,7 +92,6 @@ class SpamBot:
             print("DM not sent. There was an issue while sending. Try again later.")
 
     def __send(self, user, message):
-        """Sends an Instagram DM in a headless browser, therefore not showing it."""
         opts = Options()
         if self.proxy is not None:
             opts.add_argument('--proxy-server=%s' % self.proxy)
@@ -107,6 +108,22 @@ class SpamBot:
             browser.quit()
             return False
         browser.get("https://www.instagram.com/direct/new/")
+        found = False
+        if not self.headless:
+            for j in range(20):
+                btns = browser.find_elements_by_tag_name("button")
+                for btn in btns:
+                    if "Not Now" in btn.text:
+                        btn.click()
+                        lock = True
+                        break
+                if lock:
+                    break
+                else:
+                    time.sleep(0.5)
+            else:
+                browser.quit()
+                return False
         browser.find_element_by_name("queryBox").send_keys(user)
         lock = False
         for j in range(20):
