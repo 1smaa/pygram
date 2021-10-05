@@ -3,18 +3,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 import random
-import sys
 import os
-
-
-def blockPrint():
-    sys.stdout = open(os.devnull, 'w')
-
-# Restore
-
-
-def enablePrint():
-    sys.stdout = sys.__stdout__
 
 
 class SpamBot:
@@ -25,9 +14,9 @@ class SpamBot:
     def login(self, username, password):
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
-        blockPrint()
+
         cookies, result = self._login(username, password)
-        enablePrint()
+
         if result:
             self.cookies = cookies
             print("Logged in correctly.")
@@ -43,6 +32,7 @@ class SpamBot:
         opts.headless = self.headless
         browser = webdriver.Chrome(
             ChromeDriverManager().install(), options=opts)
+        os.system("cls")
         try:
             browser.get("https://www.instagram.com")
         except:
@@ -99,9 +89,9 @@ class SpamBot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
-        blockPrint()
+
         result = self._send(user, message)
-        enablePrint()
+
         if result:
             print("DM sended correctly.")
         else:
@@ -116,6 +106,7 @@ class SpamBot:
             "user-agent=%s" % 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0')
         browser = webdriver.Chrome(
             ChromeDriverManager().install(), options=opts)
+        os.system("cls")
         browser.get("https://www.instagram.com")
         try:
             for cookie in self.cookies:
@@ -209,9 +200,9 @@ class Bot:
     def login(self, username, password):
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
-        blockPrint()
+
         cookies, result = self._login(username, password)
-        enablePrint()
+
         if result:
             self.cookies = cookies
             print("Logged in correctly.")
@@ -227,6 +218,7 @@ class Bot:
         opts.headless = self.headless
         browser = webdriver.Chrome(
             ChromeDriverManager().install(), options=opts)
+        os.system("cls")
         try:
             browser.get("https://www.instagram.com")
         except:
@@ -282,9 +274,9 @@ class Bot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
-        blockPrint()
+
         result = self._like(link)
-        enablePrint()
+
         if result:
             print("Post liked correctly.")
         else:
@@ -299,6 +291,7 @@ class Bot:
         opts.headless = self.headless
         browser = webdriver.Chrome(
             ChromeDriverManager().install(), options=opts)
+        os.system("cls")
         browser.get("https://www.instagram.com")
         for cookie in self.cookies:
             browser.add_cookie(cookie)
@@ -332,9 +325,9 @@ class Bot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
-        blockPrint()
+
         result = self._follow("https://www.instagram.com/"+username)
-        enablePrint()
+
         if result:
             print("User followed correctly.")
         else:
@@ -347,6 +340,7 @@ class Bot:
             opts.add_argument('--proxy-server=%s' % self.proxy)
         browser = webdriver.Chrome(
             ChromeDriverManager().install(), options=opts)
+        os.system("cls")
         try:
             browser.get("https://www.instagram.com")
         except:
