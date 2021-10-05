@@ -124,7 +124,7 @@ class SpamBot:
             browser.quit()
             return False
         browser.get("https://www.instagram.com/direct/new/")
-        found = False
+        lock = False
         if not self.headless:
             for j in range(20):
                 btns = browser.find_elements_by_tag_name("button")
