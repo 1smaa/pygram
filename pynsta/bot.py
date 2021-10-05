@@ -3,6 +3,18 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 import random
+import sys
+import os
+
+
+def blockPrint():
+    sys.stdout = open(os.devnull, 'w')
+
+# Restore
+
+
+def enablePrint():
+    sys.stdout = sys.__stdout__
 
 
 class SpamBot:
@@ -13,14 +25,16 @@ class SpamBot:
     def login(self, username, password):
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
+        blockPrint()
         cookies, result = self.__login(username, password)
+        enablePrint()
         if result:
             self.cookies = cookies
             print("Logged in correctly.")
         else:
             Exception("Error while logging in.")
 
-    def __login(self, username, password):
+    def _login(self, username, password):
         """A specific method for advanced users, that returns the cookies to let you handle
         them yourself."""
         opts = Options()
@@ -85,13 +99,15 @@ class SpamBot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
+        blockPrint()
         result = self.__send(user, message)
+        enablePrint()
         if result:
             print("DM sended correctly.")
         else:
             print("DM not sent. There was an issue while sending. Try again later.")
 
-    def __send(self, user, message):
+    def _send(self, user, message):
         opts = Options()
         if self.proxy is not None:
             opts.add_argument('--proxy-server=%s' % self.proxy)
@@ -193,15 +209,16 @@ class Bot:
     def login(self, username, password):
         """Logs to your profile and saves the cookies to send messages without
         accessing your profile every time."""
-
+        blockPrint()
         cookies, result = self.__login(username, password)
+        enablePrint()
         if result:
             self.cookies = cookies
             print("Logged in correctly.")
         else:
             Exception("Error while logging in.")
 
-    def __login(self, username, password):
+    def _login(self, username, password):
         """A specific method for advanced users, that returns the cookies to let you handle
         them yourself."""
         opts = Options()
@@ -215,14 +232,15 @@ class Bot:
         except:
             browser.quit()
             return None, False
-        btns = browser.find_elements_by_tag_name("button")
-        for btn in btns:
-            if "Accept All" in btn.text:
-                btn.click()
-                break
-        else:
-            browser.quit()
-            return None, False
+        if not self.headless:
+            btns = browser.find_elements_by_tag_name("button")
+            for btn in btns:
+                if "Accept All" in btn.text:
+                    btn.click()
+                    break
+            else:
+                browser.quit()
+                return None, False
         for j in range(10):
             try:
                 browser.find_element_by_name("username").send_keys(username)
@@ -264,13 +282,15 @@ class Bot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
+        blockPrint()
         result = self.__like(link)
+        enablePrint()
         if result:
             print("Post liked correctly.")
         else:
             print("Error while trying to like the post.")
 
-    def __like(self, link):
+    def _like(self, link):
         """A more specific method that lets you handle yourself the result
         of the like attempt."""
         opts = Options()
@@ -312,13 +332,15 @@ class Bot:
             username = input("Username: ")
             password = input("Password: ")
             self.login(username, password)
+        blockPrint()
         result = self.__follow("https://www.instagram.com/"+username)
+        enablePrint()
         if result:
             print("User followed correctly.")
         else:
             print("Error while following the user.")
 
-    def __follow(self, link):
+    def _follow(self, link):
         opts = Options()
         opts.headless = self.headless
         if self.proxy is not None:
